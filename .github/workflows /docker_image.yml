@@ -1,6 +1,10 @@
 name: Docker Image CI
 
-on: [push]
+on:
+  push:
+  release:
+    types: [published]
+  workflow_dispatch:
 
 jobs:
 
@@ -10,12 +14,22 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
-    - run: docker build . --file Dockerfile --tag owlery-vfb:${GITHUB_REF#refs/heads/}
-    - name: Dockerize
-      if: success()
-      uses: manusa/actions-publish-docker@v1.1.2
+      uses: actions/checkout@v4
+    - name: Extract metadata
+      id: meta
+      run: |
+        if [[ $GITHUB_REF == refs/tags/* ]]; then
+          TAG=${GITHUB_REF#refs/tags/}
+        else
+          TAG=${GITHUB_REF#refs/heads/}
+        fi
+        echo "tag=$TAG" >> $GITHUB_OUTPUT
+    - name: Build Docker image
+      run: docker build . --file Dockerfile --tag owlery-vfb:${{ steps.meta.outputs.tag }}
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
       with:
-        name: virtualflybrain/owlery-vfb
         username: ${{ secrets.DOCKER_HUB_USER }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+    - name: Push Docker image
+      run: docker push virtualflybrain/owlery-vfb:${{ steps.meta.outputs.tag }}
