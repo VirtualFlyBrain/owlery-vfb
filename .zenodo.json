@@ -1,0 +1,35 @@
+{
+  "title": "owlery-vfb: Owlery reasoner endpoint configured for the Virtual Fly Brain ontology",
+  "upload_type": "software",
+  "license": "apache-2.0",
+  "access_right": "open",
+  "creators": [
+    {
+      "name": "Court, Robert",
+      "affiliation": "University of Edinburgh",
+      "orcid": "0000-0002-0173-9080"
+    }
+  ],
+  "description": "<p>Container build and configuration for the Owlery OWL reasoner endpoint used by Virtual Fly Brain. It serves DL queries over VFB's ontology, and is what answers the classification and subsumption queries behind VFB's search and its neuron/region browsing.</p><p>By default it loads <code>owlery-live.owl</code> as published at <code>http://VirtualFlyBrain.org/data/VFB/OWL/owlery-live.owl</code>; the <code>OWLURL</code> environment variable overrides this, and <code>LOGLEVEL</code> controls logging. Request and idle timeouts are set to 240 seconds to survive long prefix-resolution queries.</p><p><strong>This repository contains VFB's Dockerfile and configuration only.</strong> Owlery itself is separate software by the Phenoscape project, MIT licensed, at https://github.com/phenoscape/owlery . This repository began as a fork of https://github.com/Robbie1977/docker-sbt-owlery .</p>",
+  "keywords": [
+    "Owlery",
+    "OWL",
+    "reasoner",
+    "ontology",
+    "Drosophila melanogaster",
+    "Virtual Fly Brain",
+    "Docker"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.3389/fphys.2023.1076533",
+      "relation": "isSupplementTo",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "https://github.com/phenoscape/owlery",
+      "relation": "isDerivedFrom",
+      "scheme": "url"
+    }
+  ]
+}
